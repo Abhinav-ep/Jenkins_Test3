@@ -9,8 +9,8 @@ pipeline {
         stage('Deploy to Minikube') {
             steps {
                 script {
-                    sh 'kubectl apply -f nginx-deployment.yaml'
-                    sh 'kubectl apply -f nginx-service.yaml'
+                    sh 'kubectl apply -f Files/nginx-deployment.yaml'
+                    sh 'kubectl apply -f Files/nginx-service.yaml'
                 }
             }
         }
