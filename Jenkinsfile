@@ -4,12 +4,9 @@ pipeline {
     stages {
         stage('Deploy to Minikube') {
             steps {
-                withCredentials([file(credentialsId: 'minikube-kubeconfig', variable: 'KUBECONFIG_FILE')]) {
-                    sh '''
-                        export KUBECONFIG=$KUBECONFIG_FILE
-                        kubectl apply -f Files/nginx-deployment.yaml
-                        kubectl apply -f Files/nginx-service.yaml
-                    '''
+                withCredentials([file(credentialsId: 'kubeconfig-minikube', variable: 'KUBECONFIG')]) {
+                    sh 'kubectl apply -f Files/nginx-deployment.yaml'
+                    sh 'kubectl apply -f Files/nginx-service.yaml'
                 }
             }
         }
