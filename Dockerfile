@@ -18,7 +18,12 @@ RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/s
     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
     rm kubectl
 
-# Install recommended Jenkins plugins
+# Create kube directory and copy config (ensure you copy from the same dir as Dockerfile)
+RUN mkdir -p /home/jenkins/.kube
+COPY ./kubeconfig /home/jenkins/.kube/config
+RUN chown -R jenkins:jenkins /home/jenkins/.kube
+
+# Install Jenkins plugins
 RUN jenkins-plugin-cli --plugins "blueocean docker-workflow kubernetes-cli"
 
 USER jenkins
