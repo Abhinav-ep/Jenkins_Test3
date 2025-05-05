@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        KUBECONFIG = "${HOME}/.kube/config"  // Points to the kubeconfig on your local machine
-    }
-
     stages {
         stage('Apply NGINX Deployment') {
             steps {
