@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+
+    environment {
+        KUBECONFIG = "${HOME}/.kube/config"  // Points to the kubeconfig on your local machine
+    }
+
+    stages {
+        stage('Apply NGINX Deployment') {
+            steps {
+                script {
+                    sh '''
+                        echo "Applying nginx deployment to nginx-namespace"
+                        kubectl apply -f nginx-deployment.yaml --namespace=nginx-namespace
+                    '''
+                }
+            }
+        }
+    }
+}
