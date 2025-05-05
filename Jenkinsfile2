@@ -10,8 +10,8 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        echo "Applying nginx deployment to nginx-namespace"
-                        kubectl apply -f nginx-deployment.yaml --namespace=nginx-namespace
+                        echo "Applying nginx deployment"
+                        kubectl apply -f nginx-deployment.yaml
                     '''
                 }
             }
