@@ -1,10 +1,20 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            label 'kubectl'
+            defaultContainer 'kubectl'
+        }
+    }
 
     stages {
-        stage('Check Pods') {
+        stage('Apply NGINX Deployment') {
             steps {
-                sh 'kubectl get pods'
+                script {
+                    sh '''
+                        echo "Applying nginx deployment"
+                        kubectl apply -f Files/nginx-deployment.yaml
+                    '''
+                }
             }
         }
     }
