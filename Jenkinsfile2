@@ -2,14 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Apply NGINX Deployment') {
+        stage('Check Pods') {
             steps {
-                script {
-                    sh '''
-                        echo "Applying nginx deployment"
-                        kubectl get pods --namespace=defaul
-                    '''
-                }
+                sh 'kubectl get pods'
             }
         }
     }
+}
