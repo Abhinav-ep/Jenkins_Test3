@@ -7,10 +7,9 @@ pipeline {
                 script {
                     sh '''
                         echo "Applying nginx deployment"
-                        kubectl apply -f Files/nginx-deployment.yaml
+                        kubectl get pods --namespace=defaul
                     '''
                 }
             }
         }
     }
-}
