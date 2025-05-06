@@ -1,13 +1,27 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: bitnami/kubectl:latest
+    command:
+    - cat
+    tty: true
+"""
+        }
+    }
 
     stages {
-        stage('Apply NGINX Deployment') {
+        stage('Apply NGINX Pod') {
             steps {
-                script {
+                container('kubectl') {
                     sh '''
-                        echo "Deploying NGINX to Kubernetes cluster"
-                        kubectl apply -f Files/nginx-deployment.yaml
+                        echo "Applying nginx-deployment.yaml to Kubernetes cluster"
+                        kubectl apply -f nginx-deployment.yaml
                     '''
                 }
             }
