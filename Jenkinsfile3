@@ -1,0 +1,25 @@
+pipeline {
+    agent {
+        kubernetes {
+            label 'kubectl-agent'          // Match this with your Kubernetes Pod Template label
+            defaultContainer 'kubectl'     // Must match the container name inside that pod template
+        }
+    }
+
+    environment {
+        KUBECONFIG = '/home/jenkins/.kube/config'  // Or the correct path inside the agent pod
+    }
+
+    stages {
+        stage('Deploy NGINX') {
+            steps {
+                container('kubectl') {
+                    sh '''
+                        echo "Deploying NGINX to Kubernetes cluster..."
+                        kubectl apply -f Files/nginx-deployment.yaml
+                    '''
+                }
+            }
+        }
+    }
+}
